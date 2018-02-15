@@ -3,6 +3,9 @@
 // Call this function when the page loads (the "ready" event)
 $(document).ready(function() {
 	initializePage();
+
+
+
 })
 
 /*
@@ -26,5 +29,33 @@ function addProjectDetails(e) {
 	// get rid of 'project' from the front of the id 'project3'
 	var idNumber = projectID.substr('project'.length);
 
+	
+
 	console.log("User clicked on project " + idNumber);
+
+	var endpoint = "/project/".concat(idNumber);
+	console.log(endpoint);
+	
+	$.get(endpoint, callback);
+	
+	
+
+}
+
+function callback(result){
+	//console.log(result);
+	var projectID = result.id;
+	var projectEle = "#project".concat(projectID ," .thumbnail .details");
+
+	//console.log(projectEle);
+
+	var date = "<p>".concat(result.date,"</p>");
+	var title = "<p>".concat(result.title,"</p>");
+	var image = "<img class=".concat( " \"detailsImage\"" , "src = \"", result.image, "\">");
+	//console.log(image); 
+
+	var htmlString = image.concat(title, date, result.summary)
+	$(projectEle).html(htmlString);
+	
+	//console.log($(projectEle).length);
 }
